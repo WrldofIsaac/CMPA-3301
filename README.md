@@ -5,4 +5,4 @@ This website is a simple personal profile I built for my CMPA 3301 project. It i
 
 Hope you guys enjoy!
 
-**Link to Repository:**  
+**Link to Repository:**  https://github.com/WrldofIsaac/CMPA-3301
