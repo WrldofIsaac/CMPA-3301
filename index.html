@@ -52,11 +52,45 @@
         <section>
             <h2>My hobbies</h2>
 
-            <ul class="hobbies">
-                <li>Fishing</li>
-                <li>Playing guitar</li>
-                <li>Hunting</li>
-            </ul>
+            <div class="tabs">
+                <div class="tab-list" role="tablist" aria-label="Hobbies">
+                    <button class="tab" role="tab" id="tab-fishing" aria-controls="panel-fishing" aria-selected="true">Fishing</button>
+                    <button class="tab" role="tab" id="tab-guitar" aria-controls="panel-guitar" aria-selected="false" tabindex="-1">Playing guitar</button>
+                    <button class="tab" role="tab" id="tab-hunting" aria-controls="panel-hunting" aria-selected="false" tabindex="-1">Hunting</button>
+                </div>
+
+                <!-- To add your photos: put image files in the images/ folder and match the file names below. -->
+
+                <div class="tab-panel" role="tabpanel" id="panel-fishing" aria-labelledby="tab-fishing">
+                    <figure class="photo" data-placeholder="Add your photo: images/fishing.jpg">
+                        <img src="images/fishing.jpg" alt="Me fishing" onerror="this.remove()">
+                    </figure>
+                    <h3>Fishing</h3>
+                    <p>
+                        Fishing is how I slow down and clear my head. I like the patience it takes and the time outdoors, and there's nothing better than getting a bite and fighting the fish.
+                    </p>
+                </div>
+
+                <div class="tab-panel" role="tabpanel" id="panel-guitar" aria-labelledby="tab-guitar">
+                    <figure class="photo" data-placeholder="Add your photo: images/guitar.jpg">
+                        <img src="images/guitar.jpg" alt="Me playing guitar" onerror="this.remove()">
+                    </figure>
+                    <h3>Playing guitar</h3>
+                    <p>
+                        Playing guitar lets me be creative and take a break from screens. I enjoy learning new songs and slowly getting better, and it's something I can pick up any time to unwind, but it is something that has made me a better person and strengthening my walk with the lord.
+                    </p>
+                </div>
+
+                <div class="tab-panel" role="tabpanel" id="panel-hunting" aria-labelledby="tab-hunting">
+                    <figure class="photo" data-placeholder="Add your photo: images/hunting.jpg">
+                        <img src="images/hunting.jpg" alt="Me hunting" onerror="this.remove()">
+                    </figure>
+                    <h3>Hunting</h3>
+                    <p>
+                        Hunting gets me outside and teaches me discipline and patience. Most of it is preparing and waiting, and it's a good excuse to spend time outside and have fun with the people that goes with me.
+                    </p>
+                </div>
+            </div>
         </section>
 
     </main>
@@ -70,6 +104,41 @@
             </p>
         </div>
     </footer>
+
+    <script>
+        // Tabs for the hobbies section. Without JavaScript, all three panels simply show one after another.
+        (function () {
+            var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab'));
+            var panels = Array.prototype.slice.call(document.querySelectorAll('.tab-panel'));
+            if (!tabs.length) return;
+
+            document.documentElement.classList.add('js');
+
+            function select(index, focus) {
+                tabs.forEach(function (tab, i) {
+                    var active = i === index;
+                    tab.setAttribute('aria-selected', active ? 'true' : 'false');
+                    tab.tabIndex = active ? 0 : -1;
+                    panels[i].hidden = !active;
+                });
+                if (focus) tabs[index].focus();
+            }
+
+            tabs.forEach(function (tab, i) {
+                tab.addEventListener('click', function () { select(i, false); });
+                tab.addEventListener('keydown', function (e) {
+                    var next = null;
+                    if (e.key === 'ArrowRight') next = (i + 1) % tabs.length;
+                    if (e.key === 'ArrowLeft') next = (i - 1 + tabs.length) % tabs.length;
+                    if (e.key === 'Home') next = 0;
+                    if (e.key === 'End') next = tabs.length - 1;
+                    if (next !== null) { e.preventDefault(); select(next, true); }
+                });
+            });
+
+            select(0, false);
+        })();
+    </script>
 
 </body>
 </html>
